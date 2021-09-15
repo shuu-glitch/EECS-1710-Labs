@@ -2,7 +2,7 @@ color bgColor = color(0, 0, 0);
 PFont font;
 
 void setup() {
-  size(900, 700, P2D); //p2d enables 2D GPU acceleration; should notice a huge speed boost
+  size(900, 700, P2D);
   background(bgColor);
   font = createFont("Times New Roman", 60);
   textFont(font, 24);
