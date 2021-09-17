@@ -19,7 +19,7 @@ void draw() {
 void mouseDragged() {
   ellipseMode(CENTER);
   rectMode(CENTER);
-  fill(149, 11, 11);
+  fill(random(255), random(255), random(255));
   stroke(255, 255, 255);
   ellipse(mouseX, mouseY, pmouseX, pmouseY);
 }
