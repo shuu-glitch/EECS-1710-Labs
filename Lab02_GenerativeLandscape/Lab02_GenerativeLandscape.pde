@@ -4,8 +4,10 @@
 */
 
 import processing.pdf.*;
+import gifAnimation.*;
 
-PImage girl;
+Gif girl;
+
 float[] terrainContour;
 
 color[] forestColors = {
@@ -41,9 +43,11 @@ void setup(){
   amplitude = 0.5 * height / 720;
   addSpikes = true;
   spikeAmplitude = 10;
-  girl = loadImage("girl_running.gif");
+  girl = new Gif(this, "girl_running.gif");
+  girl.play();
+  
   // frameRate(12); for slowing it down if you need to see
-  noLoop();
+  //noLoop();
   
 }
 
