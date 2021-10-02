@@ -95,6 +95,12 @@ class Predator {
     // once the gameTimeout is greater than 20s, YOU LOSE. there is no way to win lol
     if (millis() > gameTimeout) {
       grassLand = timeoutFail;
+      target = new PVector(mouseX, mouseY); 
+      /* Once the game "ends", the fox chases your cursor instead, seemingly
+      overcoming the fear of the mouse once enough time has passed. While
+      it can be stalled by actively bothering it, avoiding it now only draws its
+      curiousity. */
+      
       }  
     
     position.y += sin(millis()) / 2;
