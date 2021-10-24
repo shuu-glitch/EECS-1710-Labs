@@ -18,6 +18,7 @@ class Enemy {
   // checks for collision / if locations of the player and the pipe is overlapping
   boolean hits(Player kyoshi) {
     return ((kyoshi.position.x > x) && (kyoshi.position.x < (x + wid))) &&  (kyoshi.position.y > (height - bottom - kyoshi.r));
+
   }
   
   void show(boolean hit) {

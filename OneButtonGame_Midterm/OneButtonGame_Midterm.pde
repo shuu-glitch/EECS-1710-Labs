@@ -96,7 +96,7 @@ make the game playable only if the game is in progress. */
      gameStart = false; 
   }
     
-  fill(16, 53, 201); // text colour for score
+  fill(255); // text colour for score
   textSize(32); // text size for score
     
   // display score
