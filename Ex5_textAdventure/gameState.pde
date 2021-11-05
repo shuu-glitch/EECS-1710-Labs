@@ -18,11 +18,13 @@ void switchState(int nextState) {
     currentOptions.add(new TextOption("Go for the exit.", -4)); // BAD END 1
   }
   else if(nextState == 2) {
+    dust.play();
     mainText = "You decide to look around the room. \nFrom initial observations, the room has nothing of value; only \ndecayed paper and molded food you would rather starve than eat, \ncurrently. It's damp and chilly, which doesn't alleviate \nyour sense of urgency. There are a few shelves, lined with \ndrying, moth-eaten books. You see a crudely carved out map and \npick it up, but it turns to dust in your hand. Disspirited, \nyou notice that there is nothing else of value in the room, \nbut the growls outside have stopped.";
     currentOptions.clear();
     currentOptions.add(new TextOption("Leave the room.", 3));
   }
   else if(nextState == 3) {
+    hallwayAmb.play();
     mainText = "You are now in the hallway. The halls, in contrast \nto the room you were just in, are pristine and blindingly white. \nIt feels more like a private hospital, yet you see no staff or even \npatients wandering about. There are many closed doors, some perhaps \nlocked, but there are two open ones; one on the left side of the hallway \nand one further down the hall on the right side.";
     currentOptions.clear();
     currentOptions.add(new TextOption("Go through the door on the left.", 4));
@@ -35,8 +37,9 @@ void switchState(int nextState) {
     currentOptions.add(new TextOption("Backtrack?", 7 )); // BAD END 2
   }
   else if(nextState == 5) {
-    if (generalMusic.isPlaying()) {
+    if (generalMusic.isPlaying() || hallwayAmb.isPlaying()) {
       generalMusic.stop();
+      hallwayAmb.stop();
       endingMusic.loop();
     }
     
@@ -46,14 +49,20 @@ void switchState(int nextState) {
     currentOptions.add(new TextOption("Quit", -3));
   }
   else if(nextState == 6) {
+    if (hallwayAmb.isPlaying()) {
+      hallwayAmb.stop();
+      lightSwitch.play();
+    }
+    
     mainText = "You bravely stretch your hand out to the darkness, \npalming clumsily alongside the closest wall next to you. A \nlight switch is located, and you promptly flick it. \nIt does comparatively little, but it's enough for you to vaguely see \nSOME of your surroundings. A small altar is positioned near the \nback of the room, with fresh black flowers you cannot identify. \nThe floor is carpeted, with lumps on the ground now \nidentified as kneeling pads closest to it. \nBesides that, the room is empty of anything useful.";
     currentOptions.clear();
     currentOptions.add(new TextOption("Look at the altar more closely.", 8));
     currentOptions.add(new TextOption("Take the flowers and leave.", 9));
   }
   else if(nextState == 7) {
-    if (generalMusic.isPlaying()) {
+    if (generalMusic.isPlaying() || hallwayAmb.isPlaying()) {
       generalMusic.stop();
+      hallwayAmb.stop();
       endingMusic.loop();
     }
     
@@ -63,12 +72,16 @@ void switchState(int nextState) {
     currentOptions.add(new TextOption("Quit", -3));
   }
   else if(nextState == 8) {
+    distortion.play();
     mainText = "You move closer to the altar; the closer you get, \nthe more blurry your vision, and the longer you linger, \nthe sicker you feel. Yet, something compels you to persevere. \nDo you-";
     currentOptions.clear();
     currentOptions.add(new TextOption("Wait patiently by the altar.", 10));
     currentOptions.add(new TextOption("Take the flowers and GET OUT GET OUTGETOUT-.", 9)); // BACK TO 9
   }
   else if(nextState == 9) {
+    if(distortion.isPlaying()) distortion.stop();
+    flowers.play();
+    
     mainText = "You quickly leave the room, flowers in hand. \nThe hallway is clear, and, more noticeably, the right door \nfrom earlier is now shut. When you try to open it, it won't \nbudge. Continuing down the hall to its ending, a flight of stairs \nappears to lead to a large open area. Sounds of whirring and \nmachinery can be heard.";
     currentOptions.clear();
     currentOptions.add(new TextOption("Go down the flight of stairs to see where the noise is coming from.", 17));
@@ -85,12 +98,20 @@ void switchState(int nextState) {
     currentOptions.add(new TextOption("Keep sleeping.", 11));
   }
   else if(nextState == 12) {
+    if(distortion.isPlaying()) {
+      distortion.stop();
+    }
     mainText = "When you wake next, the flowers are gone. The \noppressive air is seemingly cleansed, and you feel refreshed. \nStanding up, you see the door to the room has been shut. \nWhat do you do now?";
     currentOptions.clear();
     currentOptions.add(new TextOption("Open the door and leave the room.", 14));
     currentOptions.add(new TextOption("Look around to see if anything else is missing.", 13));
   }
   else if(nextState == 13) {
+    // KNIFE SOUND EFFECT:
+    ritualKnife.play();
+    delay.process(ritualKnife, 4);
+    delay.time(4);
+    
     mainText = "You look around, yet the room is still as dimly lit as you \nremember. Oddly serene, isn't it? Then something glints close to your leg, \nand you glance down at it. There, where you swore your head \nlay not a few moments ago, is a ritual knife sticking into the ground.";
     currentOptions.clear();
     currentOptions.add(new TextOption("Take the knife, and leave.", 14));
@@ -102,6 +123,7 @@ void switchState(int nextState) {
     currentOptions.add(new TextOption("Stare at the eyes. DO NOT MOVE.", 16));
   }
   else if(nextState == 15) {
+    run.play();
     mainText = "You take off down the hall, not daring to look back. \nYou don't hear anything pursuing you, but something \ncompels you to keep moving. You almost fall down a long flight of \nstairs in your escape, but you end up in a large sub-floor laboratory.";
     currentOptions.clear();
     currentOptions.add(new TextOption("Look around.", 17));
@@ -118,6 +140,7 @@ void switchState(int nextState) {
     currentOptions.add(new TextOption("Quit", -3));
   }
   else if(nextState == 17) {
+    computer.play();
     mainText = "You watch as screens start up, updates are applied, and\n various applications are opened, seemingly on their own. The interface \nis alien in origin; you cannot understand what any of it means, \nwhat language it is running, what it WANTS. Is it even alive? \nOut of some morbid curiousity, you get closer - to check it out, \nand a button that glows a dim shade of pink stands out to you.";
     currentOptions.clear();
     currentOptions.add(new TextOption("PRESS THE BUTTON.", 18));
@@ -125,6 +148,9 @@ void switchState(int nextState) {
     currentOptions.add(new TextOption("Look around.", 20));
   }
   else if(nextState == 18) {
+    if (computer.isPlaying()) computer.stop();
+    button.play();
+    
     mainText = "Against all reason, you press the button. \nBut yet, nothing obvious happens. Instead, the screen \nseems to reconfigure itself to be read in plain human language. \nODD. \n\"HELLO\" displays in bright white text. \"WHAT WOULD YOU \nLIKE TO KNOW?\" What would you like to know?";
     currentOptions.clear();
     currentOptions.add(new TextOption("\"The altar. What did it do to me?\"", 21));
@@ -143,6 +169,8 @@ void switchState(int nextState) {
     currentOptions.add(new TextOption("Quit", -3));
   }
   else if(nextState == 20) {
+    if (beeps.isPlaying()) beeps.stop();
+    
     mainText = "You glance over at the neatly-organized files. While it occurs \nto you that reading them could provide you information as to \nwhere you are, you know they won't tell you WHY you're here. \nRegardless, you keep looking over vials and pages until something \nstands out to you: \"EXPERIMENT LOG #0217\".";
     currentOptions.clear();
     currentOptions.add(new TextOption("Read the files.", 28));
@@ -178,20 +206,25 @@ void switchState(int nextState) {
     currentOptions.add(new TextOption("Quit", -3));
   }
   else if(nextState == 25) {
+    beeps.play();
+    
     mainText = "\"GOOD FOR YOU, THEN.\" The computer makes an abrupt \nmonotone-beeping noise, before seeming to mutter to itself, \n\"NOT AGAIN!\" and \nbegin the process of shutting down. It seems like \nyou will no longer be able to glean any answers from it.";
     currentOptions.clear();
     currentOptions.add(new TextOption("You start to look around.", 20));
   }
   // BEGINNING OF RAPID FIRE CHOICES / CHASE SCENES THAT LEAD TO FINAL ENDINGS.
   else if(nextState == 26) {
+    lab.play();
+    
     mainText = "Footsteps finally enter the lab, and looking back, you see that \nthey belong to a bunch of burly men in suits - AT FIRST. \nOne of the men unhinges his jaw, revealing rows of uncannily sharp teeth. \nYou take off down the hall that appears to lead to the \nnorth; you don't know what direction it is in actuality, but you DO \nknow that you must keep moving. \nYou arrive at a crossroads, with two paths before you.";
     currentOptions.clear();
     currentOptions.add(new TextOption("Choose the left path.", 30));
     currentOptions.add(new TextOption("Choose the right path.", 31)); // BAD END 5
   }
   else if(nextState == 27) {
-    if (generalMusic.isPlaying()) {
+    if (generalMusic.isPlaying() || lab.isPlaying()) {
       generalMusic.stop();
+      lab.stop();
       endingMusic.loop();
     }
     
@@ -201,12 +234,17 @@ void switchState(int nextState) {
     currentOptions.add(new TextOption("Quit", -3));
   }
   else if(nextState == 28) {
+    papers.play();
+    
     mainText = "The file reads: \"No physical interaction with [REDACTED] is allowed \nat all. Personnel below executive ranking are forbidden \nto speak to it, for fear of [REDACTED].\" The words are scratched \nout for a bit, then continue. \"Any such interaction must be \nundertaken in liminal spaces such as [DATA EXPUNGED]. All staff \nshould avoid being unguarded within a hundred meters of it.\" \nWithout any titling to the creature or experiment, these warnings \nmake no sense to you, and you aren't sure you even want to \nstick around long enough to read or see for yourself what it is. \nAs you come to this realization, you hear footsteps coming \nfrom the hallway you passed through earlier.";
     currentOptions.clear();
     currentOptions.add(new TextOption("Proceed.", 26));
     currentOptions.add(new TextOption("Look around a little longer.", 29));
   }
   else if(nextState == 29) {
+    if (papers.isPlaying()) papers.stop();
+    vials.play();
+    
     mainText = "You ignore the files now, instead looking towards the section of vials. \nAll their contents are black or dark shades of purple, and \nyou wonder why it's so consistent. One of the vials has \nlabelling that reads, \"FOR YOUR FINAL HOUR\". Do you take it?";
     currentOptions.clear();
     currentOptions.add(new TextOption("Pick up the vial and take it.", 26));
@@ -306,6 +344,11 @@ void switchState(int nextState) {
       generalMusic.stop();
       endingMusic.loop();
     }
+    
+    // GIGGLE SOUND
+    laugh.play();
+    delay.process(laugh, 10);
+    delay.time(8);
     
     mainText = "\"Ah, my knife!\" The woman coos and makes grabby hands \nfor the inanimate object, cradling it to her chest as if \nit were her child. After a few seconds of this, she turns \nher attention back to you, with a warmer smile accompanying \nher next words. \"Thank you. For returning this to me. Now \nI can pay you back in kind.\" Within seconds, she closes the distance, \ndriving the adorned dagger through your chest. Your hands \ngrip feebly at her robes, betrayal in your gaze. She simply shrugs. \"TECHNICALLY, I DIDN'T LIE. THIS IS THE ONLY WAY TO LET YOU OUT.\"";
     currentOptions.clear();
