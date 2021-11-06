@@ -1,14 +1,15 @@
 // Code reworked from here: https://openprocessing.org/sketch/1130678
 // References used include: https://processing.org/reference/libraries/sound/SoundFile.html,
 // especially the isPlaying() ref: https://processing.org/reference/libraries/sound/SoundFile_isPlaying_.html
-// and the delay ref: https://processing.org/reference/libraries/sound/Delay.html
+// the delay ref: https://processing.org/reference/libraries/sound/Delay.html
+// and the stringList ref: https://processing.org/reference/StringList.html
 
 // Sound credits to Freesound.org, in particular ( most being reworked in Audacity by me ):
 // LINK CREDITS TO THE SOUNDS ARE PLACED IN THE README.TXT FILE!
 
 import processing.sound.*;
 
-AudioIn in;
+StringList choices;
 Delay delay;
 
 SoundFile generalMusic, endingMusic, dust, hallwayAmb, lightSwitch, distortion, flowers, ritualKnife, run, computer, button, beeps, lab, papers, vials, laugh;
@@ -43,6 +44,9 @@ void setup() {
   papers = new SoundFile(this, "papersRustle.wav");
   vials = new SoundFile(this, "vialsClink.wav");
   laugh = new SoundFile(this, "laughter.wav");
+  
+  choices = new StringList();
+  // println(choices);
   
   delay = new Delay(this);
   

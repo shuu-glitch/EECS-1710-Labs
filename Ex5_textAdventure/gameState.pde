@@ -2,6 +2,8 @@ void switchState(int nextState) {
   // code for the various states, options, text and everything that makes up the text adventure.
   
   if(nextState == 0) {
+    choices.clear();
+    
     if (endingMusic.isPlaying()) {
       endingMusic.stop();
       generalMusic.loop();
@@ -79,6 +81,8 @@ void switchState(int nextState) {
     currentOptions.add(new TextOption("Take the flowers and GET OUT GET OUTGETOUT-.", 9)); // BACK TO 9
   }
   else if(nextState == 9) {
+    choices.append("Flowers acquired.");
+    
     if(distortion.isPlaying()) distortion.stop();
     flowers.play();
     
@@ -107,6 +111,8 @@ void switchState(int nextState) {
     currentOptions.add(new TextOption("Look around to see if anything else is missing.", 13));
   }
   else if(nextState == 13) {
+    choices.append("Ritual knife acquired.");
+    
     // KNIFE SOUND EFFECT:
     ritualKnife.play();
     delay.process(ritualKnife, 4);
@@ -115,6 +121,7 @@ void switchState(int nextState) {
     mainText = "You look around, yet the room is still as dimly lit as you \nremember. Oddly serene, isn't it? Then something glints close to your leg, \nand you glance down at it. There, where you swore your head \nlay not a few moments ago, is a ritual knife sticking into the ground.";
     currentOptions.clear();
     currentOptions.add(new TextOption("Take the knife, and leave.", 14));
+    
   }
   else if(nextState == 14) {
     mainText = "Back in the blinding hallway, you look back the way you came. \nThe lights flicker with warnings, and you swear you can see eyes \nwatching your every move. \nIn a distant realm, you can hear voices that speak in \na language you cannot understand, but one phrase is deliberately \nconveyed to you. \n\"Poor, poor unfortunate soul.\"";
@@ -185,14 +192,20 @@ void switchState(int nextState) {
   else if(nextState == 22) {
     mainText = "\"FLOWERS ...? OH, YOU SAW THOSE. I HOPE SOME \nMORTAL LIKE YOU DIDN'T TRY TO TOUCH THEM OR ANYTHING. \nRATHER NASTY THINGS, THEY ARE. BUT THEY'RE MY MASTERS' \nPRIDE AND JOY. EXTREMELY EFFECTIVE, TOO!\" \nThe computer also seems to let out a robotic hum of glee, \nprompting you to recall ...";
     currentOptions.clear();
-    currentOptions.add(new TextOption("\"...You mean THESE flowers?\" (If you took them with you, enter \"1\".)", 24)); // BAD END 3
+    
+    if(choices.hasValue("Flowers acquired.")) {
+      currentOptions.add(new TextOption("\"...You mean THESE flowers?\"", 24)); // BAD END 3
+    } else currentOptions.add(new TextOption("???", -10));
+    
     currentOptions.add(new TextOption("\"Ah. I didn't bring them with me. They were gone when I came to.\"", 25));
   }
   else if(nextState == 23) {
     mainText = "\"WHERE YOU ARE ... ? RIGHT, RIGHT ... WELL, YOU MUST HAVE \nBEEN BROUGHT HERE. AGAINST YOUR WILL, I'M SURE. BUT THAT LITTLE \nFACT WON'T MATTER FOR LONG.\" With that, alarms begin to blare, \nand you can hear distinct footsteps echoing from the hall and stairwell.";
     currentOptions.clear();
     currentOptions.add(new TextOption("Run down the nearest exit.", 26));
-    currentOptions.add(new TextOption("Stay and fight. (Only select if you picked up, \"RITUAL KNIFE\")", 27)); // BAD END 4
+    if(choices.hasValue("Ritual knife acquired.")) {
+      currentOptions.add(new TextOption("Stay and fight.", 27)); // BAD END 4
+    } else currentOptions.add(new TextOption("???", -10));
   }
   else if(nextState == 24) {
     if (generalMusic.isPlaying()) {
@@ -236,6 +249,8 @@ void switchState(int nextState) {
   else if(nextState == 28) {
     papers.play();
     
+    choices.append("Files read.");
+    
     mainText = "The file reads: \"No physical interaction with [REDACTED] is allowed \nat all. Personnel below executive ranking are forbidden \nto speak to it, for fear of [REDACTED].\" The words are scratched \nout for a bit, then continue. \"Any such interaction must be \nundertaken in liminal spaces such as [DATA EXPUNGED]. All staff \nshould avoid being unguarded within a hundred meters of it.\" \nWithout any titling to the creature or experiment, these warnings \nmake no sense to you, and you aren't sure you even want to \nstick around long enough to read or see for yourself what it is. \nAs you come to this realization, you hear footsteps coming \nfrom the hallway you passed through earlier.";
     currentOptions.clear();
     currentOptions.add(new TextOption("Proceed.", 26));
@@ -247,8 +262,9 @@ void switchState(int nextState) {
     
     mainText = "You ignore the files now, instead looking towards the section of vials. \nAll their contents are black or dark shades of purple, and \nyou wonder why it's so consistent. One of the vials has \nlabelling that reads, \"FOR YOUR FINAL HOUR\". Do you take it?";
     currentOptions.clear();
-    currentOptions.add(new TextOption("Pick up the vial and take it.", 26));
+    currentOptions.add(new TextOption("Pick up the vial and take it.", -7));
     currentOptions.add(new TextOption("Ignore the vial. YOUR TIME IS UP EITHER WAY.", 26));
+    
   }
   else if(nextState == 30) {
     mainText = "The tunnels are indistinguishable from each other, but \nyou have to make a blind guess, for those footsteps get CLOSER \nthe longer you delay. You come to another crossroads, this time with three identical tunnels.";
@@ -262,7 +278,9 @@ void switchState(int nextState) {
     currentOptions.clear();
     currentOptions.add(new TextOption("Ignore the warning. Press on.", 32)); // BAD ENDING 6
     currentOptions.add(new TextOption("Heed the warning, and turn back.", 33)); // BAD ENDING 7
-    currentOptions.add(new TextOption("(If you have read the file AND have picked up the vial, enter \"3\".)", 34)); // BAD ENDING 8
+    if(choices.hasValue("Files read.") && choices.hasValue("Mysterious vial acquired.")) {
+      currentOptions.add(new TextOption("Drink the mysterious liquid from the vial.", 34)); // BAD ENDING 8
+    } else currentOptions.add(new TextOption("???", -10));
   }
   else if(nextState == 32) {
     if (generalMusic.isPlaying()) {
@@ -322,9 +340,15 @@ void switchState(int nextState) {
   else if(nextState == 37) {
     mainText = "You seem to have ran yourself in circles, as you end up back \nin a lab that seems eerily similar to the first. Yet, \nthere is no sentient computer, so you know you must've made \nprogress. You don't bother gleaning over files for information \nanymore, but you realize that you're at a dead end. The \ntunnel continues no further, and the sound of heels, just one pair, \ncan be heard behind you. \n\"So you finally made it. I'll admit, I did not think one of \nmy brother's human tests would progress this far. But \nsuch is the nature of mortals; your drive is something \nlegends seem to emphasize. Unfortunately, I will have to cut \nthat short. Unless you have something you want to give to me?";
     currentOptions.clear();
-    currentOptions.add(new TextOption("If you have the vial, give her the vial.", 38)); // NORMAL END
-    currentOptions.add(new TextOption("If you have the ritual knife, give her the ritual knife.", 39)); // TRUE END
-    currentOptions.add(new TextOption("If you have neither of the above items, DIE.", -3)); // FORCE QUIT
+    if(choices.hasValue("Mysterious vial acquired.")) {
+      currentOptions.add(new TextOption("If you have the vial, give her the vial.", 38)); // NORMAL END
+    } else currentOptions.add(new TextOption("???", -10));
+    
+    if(choices.hasValue("Ritual knife acquired.")) {
+      currentOptions.add(new TextOption("If you have the ritual knife, give her the ritual knife.", 39)); // TRUE END
+    } else currentOptions.add(new TextOption("???", -10));
+    
+    currentOptions.add(new TextOption("DIE.", -3)); // FORCE QUIT
   }
   // NORMAL END
   else if(nextState == 38) {
@@ -379,6 +403,15 @@ void switchState(int nextState) {
   }
   
 // SEPARATE ENDINGS AND GAME STATES GO HERE.
+  
+  else if(nextState == -7) {
+    vials.play();
+    choices.append("Mysterious vial acquired.");
+    
+    mainText = "VIAL ACQUIRED!";
+    currentOptions.clear();
+    currentOptions.add(new TextOption("Proceed.", 26));
+  }
   
   else if(nextState == -4) {
     if (generalMusic.isPlaying()) {
