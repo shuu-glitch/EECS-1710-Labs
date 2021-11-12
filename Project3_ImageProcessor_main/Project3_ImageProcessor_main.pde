@@ -1,3 +1,5 @@
+// NOTE: THERE IS AN EXTRA IMAGE IN THE DATA FOLDER. THAT IS A TEST EXAMPLE FOR YOU TO PLAY AROUND WITH ! MAKE YOUR OWN AS WELL!
+
 PImage cleaver, candy, circle;
 ArrayList<Dot> dots;
 ArrayList<PVector> targets1, targets2;
@@ -9,7 +11,7 @@ color col1, col2;
 void setup() {
   size(50, 50, P2D);  
   cleaver = loadImage("cleaver.png"); // place the image you want here and watch the circles try and map it!
-  candy = loadImage("candy.png"); // place the image you want here and watch the circles try and map it!
+  candy = loadImage("hmm.png"); // place the image you want here and watch the circles try and map it!
   circle = loadImage("circle.png");
   
   // set the window size to the largest sides of each image
